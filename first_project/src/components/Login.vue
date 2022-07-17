@@ -30,9 +30,9 @@ export default {
       //登录表单
       loginForm: {
         //用户名
-        userName: "",
+        userName: "admin",
         //密码
-        password: ""
+        password: "123456"
       },
       rules: {
         userName: [
@@ -56,16 +56,19 @@ export default {
           //登录成功
           if (res.data.meta.status === 200) {
             //保存token
-            window.sessionStorage.setItem('Token',res.data.meta.token)
+            window.sessionStorage.setItem('token', res.data.data.token)
+            console.log(res.data.meta.token);
+            //登录成功跳转主页面
+            this.$router.push("/home")
             this.$message({
               message: '登录成功',
               type: 'success'
             });
-            //登录成功跳转主页面
-            this.$router.push("/home")
             //用户名密码不匹配
           } else if (res.data.meta.status === 400) {
             this.$message.error("用户名与密码不匹配")
+            //密码置空
+            this.loginForm.password = ""
           }
         })
 
@@ -80,8 +83,8 @@ export default {
 <style lang="less" scoped>
 .z-login-container {
   height: 100%;
-  background:url("../assets/images/login_bg.jpg") no-repeat;
-  background-size:cover
+  background: url("../assets/images/login_bg.jpg") no-repeat;
+  background-size: cover
 }
 
 .z-login-box {
